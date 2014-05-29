@@ -7,7 +7,6 @@ public class Euler {
 		String estimated = null;
 		long begin = System.currentTimeMillis();
 		
-		
 		pro.problem001();				
 		pro.problem002();		//  Solved
 		pro.problem003();				
