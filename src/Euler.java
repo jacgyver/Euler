@@ -11,17 +11,17 @@ public class Euler {
 		pro.problem002();		//  Solved
 		pro.problem003();				
 		pro.problem004();				
-//		pro.problem005();		//  too much slow			
+		System.out.println("This soluntion of problem005 is too much slow"); //		pro.problem005();		//  too much slow			
 		pro.problem006();
 		pro.problem007();				
 		pro.problem008();		//  Solved
 		pro.problem009();				
-//		pro.problem010();		too much slow		
+		System.out.println("This soluntion of problem010 is too much slow"); //		pro.problem010();		too much slow		
 		pro.problem011();				
 		pro.problem012();				
 		pro.problem013();				
-//		pro.problem014();		// 1.too much slow  2.check for option	(be careful int-type Limit )		
-		pro.problem015();				
+		System.out.println("This soluntion of problem014 is too much slow"); //		pro.problem014();		// 1.too much slow  2.check for option	(be careful int-type Limit )		
+		System.out.println("This soluntion of problem015 is not solved"); //				pro.problem015();				
 		pro.problem016();				
 		pro.problem017();				
 		pro.problem018();				
