@@ -21,7 +21,7 @@ public class Euler {
 		pro.problem012();				
 		pro.problem013();				
 		System.out.println("This soluntion of problem014 is too much slow"); //		pro.problem014();		// 1.too much slow  2.check for option	(be careful int-type Limit )		
-		System.out.println("This soluntion of problem015 is not solved"); //				pro.problem015();				
+		pro.problem015();				
 		pro.problem016();				
 		pro.problem017();				
 		pro.problem018();				
@@ -480,7 +480,6 @@ public class Euler {
 		pro.problem470();				
 		pro.problem471();				
 		pro.problem472();				
-				
 
 		long end = System.currentTimeMillis();
 		estimated = TimeUnit.MICROSECONDS.toMinutes(end-begin) + " min " + TimeUnit.MICROSECONDS.toMillis(end-begin) + " sec "; 

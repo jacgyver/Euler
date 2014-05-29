@@ -1,12 +1,41 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.StringTokenizer;
 
+import mjj.euler.util.Factorial;
 import mjj.euler.util.Mlib;
 
 public class Problem {
 
 private final int 	PROBLEM002_LIMIT 	= 4000000;	
 private final String PROBLEM003_FACTOR 	= "600851475143"; 
+private final String PROBLEM008_FACTOR 	= 	"73167176531330624919225119674426574742355349194934" +
+											"96983520312774506326239578318016984801869478851843" +
+											"85861560789112949495459501737958331952853208805511" +
+											"12540698747158523863050715693290963295227443043557" +
+											"66896648950445244523161731856403098711121722383113" +
+											"62229893423380308135336276614282806444486645238749" +
+											"30358907296290491560440772390713810515859307960866" +
+											"70172427121883998797908792274921901699720888093776" +
+											"65727333001053367881220235421809751254540594752243" +
+											"52584907711670556013604839586446706324415722155397" +
+											"53697817977846174064955149290862569321978468622482" +
+											"83972241375657056057490261407972968652414535100474" +
+											"82166370484403199890008895243450658541227588666881" +
+											"16427171479924442928230863465674813919123162824586" +
+											"17866458359124566529476545682848912883142607690042" +
+											"24219022671055626321111109370544217506941658960408" +
+											"07198403850962455444362981230987879927244284909188" +
+											"84580156166097919133875499200524063689912560717606" +
+											"05886116467109405077541002256983155200055935729725" +
+											"71636269561882670428252483600823257530420752963450" ;
+
 private final String[] PROBLEM013_SOURCE = {
 	  "37107287533902102798797998220837590246510135740250"
 	, "46376937677490009712648124896970078050417018260538"
@@ -321,7 +350,42 @@ private Mlib mlib;
 			
 		return solution;
 	}	
-	long problem008() {	long solution = 0L;	return solution;}		
+	long problem008() {	
+		pBegin = System.currentTimeMillis();
+		
+		int adjacent = 13;
+		long solution = 0L;	
+		double productSum = 0;
+		double tempSum = 1;
+		String maxDigits = null;
+		String tempDigits = null;
+		
+		
+		for (int i=0;i<PROBLEM008_FACTOR.length()-adjacent+1;i++) {
+			
+			tempDigits = PROBLEM008_FACTOR.substring(i,i+adjacent);
+			//System.out.println("tempDigits is " + tempDigits);
+			
+			for (int j=0;j<adjacent;j++) {
+				tempSum = tempSum * Integer.parseInt(tempDigits.substring(j,j+1));
+			//	System.out.println("tempDigits.substring(j,j+1) is " + (j+1) + " " + tempDigits.substring(j,j+1));
+			}
+			if (productSum < tempSum){
+				productSum = tempSum;
+				maxDigits = tempDigits;
+			}
+			
+			tempSum = 1;
+			
+		}
+	
+		solution = Math.round(productSum);
+		
+		pEnd = System.currentTimeMillis();
+		System.out.println("This soluntion of problem008 is " + solution + " -- " + (pEnd-pBegin) + " ms");
+		
+		return solution;
+	}		
 	long problem009() {
 		pBegin = System.currentTimeMillis();
 		long solution = 0L;	
@@ -491,7 +555,24 @@ private Mlib mlib;
 		return solution;
 		
 	}		
-	long problem015() {	long solution = 0L;	return solution;}	
+	long problem015() {	
+		pBegin = System.currentTimeMillis();
+		int n = 20, k = 20 ;
+		long solution = 0L;	
+		long lattice =0;
+		Factorial fact = new Factorial(3);
+
+		lattice = fact.getLong(n+k) / fact.getLong(n)*fact.getLong(k);
+		System.out.println("This fact.getLong(n+k) of problem015 is " + fact.getLong(n+k));
+		System.out.println("This fact.getLong(n+k) of problem015 is " + fact.getLong(k));
+		System.out.println("This fact.getLong(3) of problem015 is " + fact.getInteger());
+		
+		pEnd = System.currentTimeMillis();
+		System.out.println("This soluntion of problem015 is " + solution + " -- " + (pEnd-pBegin) + " ms");
+
+		solution = lattice;
+		return solution;
+	}	
 	long problem016() {
 		pBegin = System.currentTimeMillis();
 		long solution = 0L;	
@@ -606,12 +687,43 @@ private Mlib mlib;
 	}
 	long problem022() {	
 		pBegin = System.currentTimeMillis();
-
+		int count = 1;
+		int score = 0;
+		String currentLine;
+		String name;
+		StringTokenizer st;
 		long solution = 0L;	
+		ArrayList<String> al = new ArrayList<String>();
+		Mlib mlib = new Mlib();
 
+		try (BufferedReader br = new BufferedReader(new FileReader("c:\\workspace\\Euler\\names.txt")))
+		{		
+			while ((currentLine = br.readLine()) != null) {
+				//System.out.println(currentLine);
+				st = new StringTokenizer(currentLine, ",");
+				while (st.hasMoreElements()) {
+					al.add(((String) st.nextElement()).replace("\"", ""));
+				}
+				
+				Collections.sort(al);
+				
+				for(String temp:al) {
+					score = count * mlib.charsSum(temp);
+
+					solution =  solution + score;
+					//System.out.println(count + " : " + temp + " = " + score + " [" + solution );
+
+					count++;
+					score = 0;
+				
+				}
+			}
+		}	catch(IOException e) {
+				e.printStackTrace();
+		}
 		
 		pEnd = System.currentTimeMillis();
-		System.out.println("This soluntion of problem022 is " + solution + " -- " + (pEnd-pBegin) + " ms");
+		System.out.println("This soluntion of problem022 is " + solution + " -- " + (pEnd-pBegin) + " ms"  );
 		
 		return solution;
 	}
@@ -673,7 +785,25 @@ private Mlib mlib;
 	long problem027() {	long solution = 0L;	return solution;}	
 	long problem028() {	long solution = 0L;	return solution;}		
 	long problem029() {	long solution = 0L;	return solution;}	
-	long problem030() {	long solution = 0L;	return solution;}		
+	long problem030() {	
+		pBegin = System.currentTimeMillis();
+		long count = 0;
+		long sum = 0;
+		long solution = 0L;	
+		Mlib mlib = new Mlib();
+		
+		for(int i=1;i<10000;i++) {
+			sum = mlib.digitsPowerSum(Integer.toString(i),5);
+			if (i==sum) count+=sum;
+			
+			sum = 0;
+		}
+		
+		solution = count;
+		pEnd = System.currentTimeMillis();
+		System.out.println("This soluntion of problem030 is " + solution + " -- " + (pEnd-pBegin) + " ms");
+		return solution;
+	}		
 	long problem031() {	long solution = 0L;	return solution;}	
 	long problem032() {	long solution = 0L;	return solution;}		
 	long problem033() {	long solution = 0L;	return solution;}
