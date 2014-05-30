@@ -853,7 +853,38 @@ private Mlib mlib;
 
 	long problem026() {	long solution = 0L;	return solution;}		
 	long problem027() {	long solution = 0L;	return solution;}	
-	long problem028() {	long solution = 0L;	return solution;}		
+	long problem028() {	
+		pBegin = System.currentTimeMillis();
+		int sum = 0;
+		int x=0,y=0;
+		int s=-1;
+		long solution = 0L;	
+		int[][] al = new int[5][5];
+		
+		for (int i=0;i<5;i++) {
+			for(int j=0;j<5;j++) {
+				sum ++;
+				s = s * -1;
+				x = 2 + s*i ;
+				y = 2 + s*j ;
+				//al[x][y] = sum;
+				System.out.print("[" + i + "," + j + "]");
+			}
+			System.out.println();
+		}
+
+		for (int i=0;i<5;i++) {
+			for(int j=0;j<5;j++) {
+				System.out.printf("%2d",al[i][j]);
+			}
+			System.out.println();
+		}
+		
+		pEnd = System.currentTimeMillis();
+		System.out.println("This soluntion of problem030 is " + solution + " -- " + (pEnd-pBegin) + " ms");
+		
+		return solution;
+	}		
 	long problem029() {	long solution = 0L;	return solution;}	
 	long problem030() {	
 		pBegin = System.currentTimeMillis();
@@ -870,6 +901,7 @@ private Mlib mlib;
 		}
 		
 		solution = count;
+		
 		pEnd = System.currentTimeMillis();
 		System.out.println("This soluntion of problem030 is " + solution + " -- " + (pEnd-pBegin) + " ms");
 		return solution;
