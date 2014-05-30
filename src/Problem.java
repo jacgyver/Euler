@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.StringTokenizer;
 
 import mjj.euler.util.Factorial;
@@ -559,18 +560,11 @@ private Mlib mlib;
 		pBegin = System.currentTimeMillis();
 		int n = 20, k = 20 ;
 		long solution = 0L;	
-		long lattice =0;
-		Factorial fact = new Factorial(3);
-
-		lattice = fact.getLong(n+k) / fact.getLong(n)*fact.getLong(k);
-		System.out.println("This fact.getLong(n+k) of problem015 is " + fact.getLong(n+k));
-		System.out.println("This fact.getLong(n+k) of problem015 is " + fact.getLong(k));
-		System.out.println("This fact.getLong(3) of problem015 is " + fact.getInteger());
+		solution = mlib.cobination(n+k,n).longValue();
 		
 		pEnd = System.currentTimeMillis();
 		System.out.println("This soluntion of problem015 is " + solution + " -- " + (pEnd-pBegin) + " ms");
 
-		solution = lattice;
 		return solution;
 	}	
 	long problem016() {
@@ -597,9 +591,62 @@ private Mlib mlib;
 
 		return solution;
 	}		
-	long problem017() {	long solution = 0L;	return solution;}	
-	long problem018() {	
+	long problem017() {	
 		pBegin = System.currentTimeMillis();
+		HashMap<Integer, Integer> hm = new HashMap<Integer,Integer>();
+		int sum = 0;
+		int one = 0;
+		int ten = 0;
+		int hundred = 0;
+		
+		long solution = 0L;	
+		
+		hm.put(0,  0);
+		hm.put(1,  3);
+		hm.put(2,  3);
+		hm.put(3,  5);
+		hm.put(4,  4);
+		hm.put(5,  4);
+		hm.put(6,  3);
+		hm.put(7,  5);
+		hm.put(8,  5);
+		hm.put(9,  4);
+		hm.put(10, 3);
+		hm.put(11,  6);
+		hm.put(12,  6);
+		hm.put(13,  8);
+		hm.put(14,  8);
+		hm.put(15,  7);
+		hm.put(16,  7);
+		hm.put(17,  9);
+		hm.put(18,  8);
+		hm.put(19,  8);
+		hm.put(20, 6);
+		hm.put(30, 6);
+		hm.put(40, 6);
+		hm.put(50, 5);
+		hm.put(60, 5);
+		hm.put(70, 7);
+		hm.put(80, 6);
+		hm.put(90, 6);
+		hm.put(100, 10);
+		hm.put(1000, 8);
+
+		for (int i=1;i<=999;i++) {
+			one = i%20;
+			ten = (i/10)%10;
+			hundred = i/100;
+			
+			sum = sum + hm.get(hundred)*hm.get(100)+hm.get(ten*10)+hm.get(one);
+			//System.out.println(i + " : " + "This sum of problem018 is " + (hundred*hm.get(100)+ten*hm.get(ten*10)+hm.get(one)) + " " + sum);			
+		}
+		
+		solution = sum + 8;  // 8 is thousand
+		pEnd = System.currentTimeMillis();
+		//System.out.println("This soluntion of problem018 is " + solution + " -- " + (pEnd-pBegin) + " ms");
+		return solution;
+	}	
+	long problem018() {	
 		long solution = 0L;	
 		pBegin = System.currentTimeMillis();
 
@@ -676,10 +723,33 @@ private Mlib mlib;
 	}	
 	long problem021() {	
 		pBegin = System.currentTimeMillis();
-
-		long solution = 0L;	
-
+		int divisor1 = 0;
+		int divisor2 = 0;
+		int sum = 0;
 		
+		int temp = 0;
+		long solution = 0L;	
+		
+		for (int i=1;i<=10000;i++) {
+			for (int j=1;2*j<=i;j++) {
+				temp = i%j;
+				if (temp==0) divisor1 = divisor1 + j;
+			}
+			
+			for (int k=1;2*k<=divisor1;k++) {
+				temp = divisor1%k;
+				if (temp==0) divisor2 = divisor2 + k;
+			}
+			
+			if (i == divisor2 && (divisor1 != divisor2)) {
+				sum+=i;
+			}
+			
+			divisor1 = 0;
+			divisor2 = 0;			
+		}
+		
+		solution = sum;
 		pEnd = System.currentTimeMillis();
 		System.out.println("This soluntion of problem021 is " + solution + " -- " + (pEnd-pBegin) + " ms");
 		
@@ -923,16 +993,17 @@ private Mlib mlib;
 
 	long problem053() {	
 		pBegin = System.currentTimeMillis();
-		BigInteger source = new BigInteger("100");
+		int count = 0;
 		long solution = 0L;	
 
-		for (int i=1;i<100;i++) {
-			for (int j=1;j<100;j++) {
-				source.pow(100-j);
+		Mlib mlib = new Mlib();
+		
+		for (int i=1;i<=100;i++)
+			for (int j=1;j<=i;j++) {
+				if (mlib.cobination(i,j).compareTo(new BigInteger("1000000")) == 1) count++;
 			}
-		}
 		
-		
+		solution = count;
 		pEnd = System.currentTimeMillis();
 		System.out.println("This soluntion of problem053 is " + solution + " -- " + (pEnd-pBegin) + " ms");
 		
