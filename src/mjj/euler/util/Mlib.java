@@ -5,6 +5,8 @@
  */
 package mjj.euler.util;
 
+import java.math.BigInteger;
+
 public class Mlib {
 
 	// each digits sum
@@ -60,5 +62,24 @@ public class Mlib {
 			if (n%i == 0) return false; 
 		}
 		return true;
+	}
+
+	public BigInteger cobination(int possibilities,int subsets) {
+		BigInteger result = BigInteger.ZERO;
+		int diff = possibilities - subsets;
+		
+		result =
+				factorial(new BigInteger(Integer.toString(possibilities))).divide( 
+				factorial(new BigInteger(Integer.toString(subsets))).multiply(
+				factorial(new BigInteger(Integer.toString(diff)))));
+
+		return result;
+	}
+	
+	public BigInteger factorial(BigInteger n) {
+	
+		if (n.compareTo(BigInteger.ZERO) == 0) return BigInteger.ONE;
+		
+		return n.multiply(factorial(n.subtract(BigInteger.ONE)));
 	}
 }

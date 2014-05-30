@@ -760,7 +760,7 @@ private Mlib mlib;
 		int count = 1;
 		int score = 0;
 		String currentLine;
-		String name;
+
 		StringTokenizer st;
 		long solution = 0L;	
 		ArrayList<String> al = new ArrayList<String>();
