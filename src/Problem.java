@@ -1,5 +1,6 @@
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -7,6 +8,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.StringTokenizer;
 
 import mjj.euler.util.Factorial;
@@ -594,6 +596,7 @@ private Mlib mlib;
 	long problem017() {	
 		pBegin = System.currentTimeMillis();
 		HashMap<Integer, Integer> hm = new HashMap<Integer,Integer>();
+		int digit = 0;
 		int sum = 0;
 		int one = 0;
 		int ten = 0;
@@ -612,47 +615,105 @@ private Mlib mlib;
 		hm.put(8,  5);
 		hm.put(9,  4);
 		hm.put(10, 3);
-		hm.put(11,  6);
-		hm.put(12,  6);
-		hm.put(13,  8);
-		hm.put(14,  8);
-		hm.put(15,  7);
-		hm.put(16,  7);
-		hm.put(17,  9);
-		hm.put(18,  8);
-		hm.put(19,  8);
+		hm.put(11, 6);
+		hm.put(12, 6);
+		hm.put(13, 8);
+		hm.put(14, 8);
+		hm.put(15, 7);
+		hm.put(16, 7);
+		hm.put(17, 9);
+		hm.put(18, 8);
+		hm.put(19, 8);
 		hm.put(20, 6);
 		hm.put(30, 6);
-		hm.put(40, 6);
+		hm.put(40, 5);
 		hm.put(50, 5);
 		hm.put(60, 5);
 		hm.put(70, 7);
 		hm.put(80, 6);
 		hm.put(90, 6);
-		hm.put(100, 10);
-		hm.put(1000, 8);
+		hm.put(100,10);
+		hm.put(200,10);
+		hm.put(300,12);
+		hm.put(400,11);
+		hm.put(500,11);
+		hm.put(600,10);
+		hm.put(700,12);
+		hm.put(800,12);
+		hm.put(900,11);
+		hm.put(1000,11);
 
-		for (int i=1;i<=999;i++) {
-			one = i%20;
+		for (int i=1;i<=1000;i++) {
+			one = i%10;     // 1-digit
 			ten = (i/10)%10;
 			hundred = i/100;
-			
-			sum = sum + hm.get(hundred)*hm.get(100)+hm.get(ten*10)+hm.get(one);
+			digit = Integer.toString(i).length();
+			switch (digit) {
+				case 1:
+					sum = sum + hm.get(i);
+					break;
+				case 2:
+					if ((i>20) && (one > 0))	sum = sum + (hm.get(10*ten) + hm.get(one));
+					else
+						sum = sum + hm.get(i);
+					break;
+				case 3:
+					if (i%100 ==0) sum = sum + hm.get(i);
+					else if ((i%100 > 20) && (one > 0))
+								sum = sum + (hm.get(hundred) + hm.get(100) + hm.get(10*ten) + hm.get(one));
+						else 
+								sum = sum + (hm.get(hundred) + hm.get(100) + hm.get(i%100));
+					break;
+				default:
+					sum = sum + hm.get(1000);
+					break;
+			}
 			//System.out.println(i + " : " + "This sum of problem018 is " + (hundred*hm.get(100)+ten*hm.get(ten*10)+hm.get(one)) + " " + sum);			
 		}
 		
-		solution = sum + 8;  // 8 is thousand
+		solution = sum ;  
 		pEnd = System.currentTimeMillis();
-		//System.out.println("This soluntion of problem018 is " + solution + " -- " + (pEnd-pBegin) + " ms");
+		System.out.println("This soluntion of problem017 is " + solution + " -- " + (pEnd-pBegin) + " ms");
 		return solution;
 	}	
 	long problem018() {	
-		long solution = 0L;	
 		pBegin = System.currentTimeMillis();
+		int[][] source = {
+				{75, 0 , 0,	 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
+				{95, 64, 0,	 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
+				{17, 47,82,  0,	 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
+				{18, 35,87, 10,  0,	 0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
+				{20, 04,82, 47, 65,  0,	 0,  0,  0,  0,  0,  0,  0,  0,  0},
+				{19, 01,23, 75, 03, 34,  0,	 0,  0,  0,  0,  0,  0,  0,  0},
+				{88, 02,77, 73, 07, 63, 67,  0,	 0,  0,  0,  0,  0,  0,  0},
+				{99, 65,04, 28, 06, 16, 70, 92,  0,	 0,  0,  0,  0,  0,  0},
+				{41, 41,26, 56, 83, 40, 80, 70, 33,  0,	 0,  0,  0,  0,  0},
+				{41, 48,72, 33, 47, 32, 37, 16, 94, 29,  0,	 0,  0,  0,  0},
+				{53, 71,44, 65, 25, 43, 91, 52, 97, 51, 14,  0,	 0,  0,  0},
+				{70, 11,33, 28, 77, 73, 17, 78, 39, 68, 17, 57,  0,	 0,  0},
+				{91, 71,52, 38, 17, 14, 91, 43, 58, 50, 27, 29, 48,  0 , 0},
+				{63, 66,04, 68, 89, 53, 67, 30, 73, 16, 69, 87, 40, 31,  0},
+				{ 4, 62,98, 27, 23,  9, 70, 98, 73, 93, 38, 53, 60,  4, 23}};
+		
+		int comp = 0;
+		int temp1=0,temp2=0,temp3=0;;
+		long solution = 0L;	
+				
+		for (int y=13;y>=0;y--) {		
+			for (int x=13;x>=0;x--) {
+				temp1 = source[x][y];
+				temp2 = source[x+1][y];
+				temp3 = source[x+1][y+1];
 
+				comp = Math.max((temp1 + temp2), (temp1 + temp3));
+				
+				source[x][y] = comp;
+			}
+		}
+		
+		solution = source[0][0];
 		pEnd = System.currentTimeMillis();
 		System.out.println("This soluntion of problem018 is " + solution + " -- " + (pEnd-pBegin) + " ms");
-
 		
 		return solution;
 	}		
@@ -1076,7 +1137,42 @@ private Mlib mlib;
 	long problem064() {	long solution = 0L;	return solution;}		
 	long problem065() {	long solution = 0L;	return solution;}	
 	long problem066() {	long solution = 0L;	return solution;}		
-	long problem067() {	long solution = 0L;	return solution;}	
+	long problem067() {
+		pBegin = System.currentTimeMillis();
+		int[][] source = new int[100][100];
+		List<List<Integer>> al = new ArrayList<List<Integer>>(); 
+		String currentLine = null;
+		StringTokenizer st;
+		int n=0,i=0,j=0;
+		long solution = 0L;
+
+		try (BufferedReader br = new BufferedReader(new FileReader("C:\\workspace\\Euler\\triangle.txt")))
+		{
+				while ((currentLine = br.readLine()) != null) {
+					st = new StringTokenizer(currentLine," ");
+					while (st.hasMoreElements()) {
+						//al.add((int)(st.nextElement()));
+						//System.out.println( n++ + "This soluntion of problem063 is " + st.nextElement());
+						source[i][j++] = Integer.parseInt(st.nextElement().toString());
+					}
+					j=0;
+					i++;
+				}
+
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		
+		for (i=0;i<100;i++) {
+			for(j=0;j<100;j++) {
+				System.out.println("This soutce[i][j] of problem063 is " + source[i][j]);
+			}
+		}
+//		solution = n;		
+		pEnd = System.currentTimeMillis();
+		System.out.println("This soluntion of problem063 is " + solution + " -- " + (pEnd-pBegin) + " ms");
+		return solution;
+	}	
 	long problem068() {	long solution = 0L;	return solution;}		
 	long problem069() {	long solution = 0L;	return solution;}	
 	long problem070() {	long solution = 0L;	return solution;}		
