@@ -861,10 +861,37 @@ private Mlib mlib;
 	
 	long problem023() {	
 		pBegin = System.currentTimeMillis();
-
-		long solution = 0L;	
-
+		final int  LIMIT = 28123; 
+		List<Integer> li = new ArrayList<Integer>();
+		List<Integer> abundant = new ArrayList<Integer>();	
 		
+		long solution = 0L;
+		int sum = 0;
+		Mlib mlib = new Mlib();
+		
+		for (int i=5;i<LIMIT;i++) {
+			li = mlib.divisors(i);
+
+			for (int j=0;j<li.size()-1;j++)
+				sum = sum + li.get(j);
+			
+			if (i<sum) abundant.add(i);
+			
+			sum = 0;
+		}
+		System.out.println("This list of problem023 is " + abundant);		
+
+		for (int k=LIMIT-1;k>0;k--) {
+//			li = mlib.divisors(i);
+
+			for (int j=0;j<li.size()-1;j++)
+				sum = sum + li.get(j);
+			
+//			if (i<sum) abundant.add(i);
+			
+			sum = 0;
+		}
+
 		pEnd = System.currentTimeMillis();
 		System.out.println("This soluntion of problem023 is " + solution + " -- " + (pEnd-pBegin) + " ms");
 		
@@ -875,7 +902,9 @@ private Mlib mlib;
 		pBegin = System.currentTimeMillis();
 
 		long solution = 0L;	
-
+		Mlib mlib = new Mlib();
+		
+		System.out.println("This factorial of problem024 is " + mlib.factorial(new BigInteger("10")));
 		
 		pEnd = System.currentTimeMillis();
 		System.out.println("This soluntion of problem024 is " + solution + " -- " + (pEnd-pBegin) + " ms");
@@ -1297,7 +1326,22 @@ private Mlib mlib;
 	long problem166() {	long solution = 0L;	return solution;}		
 	long problem167() {	long solution = 0L;	return solution;}	
 	long problem168() {	long solution = 0L;	return solution;}		
-	long problem169() {	long solution = 0L;	return solution;}	
+	long problem169() {	
+		pBegin = System.currentTimeMillis();
+		
+		String INIT = "10000";
+		long solution = 0L;	
+		Mlib mlib = new Mlib();
+		
+		
+		System.out.println("This soluntion of problem169 is " + mlib.factorial(new BigInteger(INIT)).toString().subSequence(0, 5));
+
+		
+		pEnd = System.currentTimeMillis();
+		System.out.println("This soluntion of problem169 is " + solution + " -- " + (pEnd-pBegin) + " ms");
+		
+		return solution;
+	}	
 	long problem170() {	long solution = 0L;	return solution;}		
 	long problem171() {	long solution = 0L;	return solution;}	
 	long problem172() {	long solution = 0L;	return solution;}		

@@ -21,7 +21,7 @@ public class Euler {
 		pro.problem012();				
 		pro.problem013();				
 		System.out.println("This soluntion of problem014 is too much slow"); //		pro.problem014();		// 1.too much slow  2.check for option	(be careful int-type Limit )		
-		pro.problem015();				
+//		pro.problem015();				
 		pro.problem016();				
 		pro.problem017();				
 		pro.problem018();				
@@ -30,7 +30,7 @@ public class Euler {
 		pro.problem021();				
 		pro.problem022();				
 		pro.problem023();				
-		pro.problem024();				
+		//pro.problem024();				
 		pro.problem025();				
 		pro.problem026();				
 		pro.problem027();				
@@ -74,7 +74,7 @@ public class Euler {
 		pro.problem064();				
 		pro.problem065();				
 		pro.problem066();				
-		pro.problem067();				
+//		pro.problem067();				
 		pro.problem068();				
 		pro.problem069();				
 		pro.problem070();				

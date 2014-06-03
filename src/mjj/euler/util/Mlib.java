@@ -6,6 +6,10 @@
 package mjj.euler.util;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.SortedSet;
 
 public class Mlib {
 
@@ -82,4 +86,22 @@ public class Mlib {
 		
 		return n.multiply(factorial(n.subtract(BigInteger.ONE)));
 	}
+
+	public List<Integer> divisors(int n) {
+		List<Integer> divisors = new ArrayList<Integer>();
+		int quotient = 0;
+		int remainder = 0;
+		for (int i=1;i*i<=n;i++)	{
+			quotient = n/i; 
+			remainder = n%i;
+			if ( remainder == 0) { 
+				divisors.add(i);
+				divisors.add(quotient);
+			}
+		}
+		Collections.sort(divisors);
+			
+		return divisors;
+	}
+
 }
