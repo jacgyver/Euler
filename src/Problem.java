@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import javax.naming.BinaryRefAddr;
+
 import mjj.euler.util.Factorial;
 import mjj.euler.util.Mlib;
 
@@ -862,47 +864,80 @@ private Mlib mlib;
 	long problem023() {	
 		pBegin = System.currentTimeMillis();
 		final int  LIMIT = 28123; 
-		List<Integer> li = new ArrayList<Integer>();
-		List<Integer> abundant = new ArrayList<Integer>();	
+		List<Integer> divisors = new ArrayList<Integer>();
+		List<Integer> abundantNumber = new ArrayList<Integer>();	
+		List<Integer> tempNumber = new ArrayList<Integer>();	
 		
 		long solution = 0L;
+		int divisorsSum = 0;
+		int index = 0;
+		int temp = 0;
 		int sum = 0;
 		Mlib mlib = new Mlib();
 		
-		for (int i=5;i<LIMIT;i++) {
-			li = mlib.divisors(i);
+		for (int i=2;i<LIMIT;i++) {
+			divisors = mlib.getDivisors(i);
 
-			for (int j=0;j<li.size()-1;j++)
-				sum = sum + li.get(j);
+			for (int j=0;j<divisors.size()-1;j++)
+				divisorsSum = divisorsSum + divisors.get(j);
 			
-			if (i<sum) abundant.add(i);
+			if (i<divisorsSum) abundantNumber.add(i); // get abundant Numbers
 			
-			sum = 0;
-		}
-		System.out.println("This list of problem023 is " + abundant);		
-
-		for (int k=LIMIT-1;k>0;k--) {
-//			li = mlib.divisors(i);
-
-			for (int j=0;j<li.size()-1;j++)
-				sum = sum + li.get(j);
+			divisorsSum = 0;
 			
-//			if (i<sum) abundant.add(i);
-			
-			sum = 0;
+		//	tempNumber.add(i);
 		}
 
+			
+		for (int j=0;j<abundantNumber.size()-1;j++) {
+			for (int i=j;i<abundantNumber.size()-1;i++) {
+				temp = abundantNumber.get(j) + abundantNumber.get(i);
+				if (temp < LIMIT) 
+					tempNumber.add(i);
+			}
+		}
+
+		for (int k=LIMIT;k>1;k--) {
+			if (!tempNumber.contains(k)) sum = sum + k;
+			//System.out.println("This k of problem023 is " + k);	
+			
+		}
+		
+		System.out.println("This abundantNumber.size of problem023 is " + abundantNumber.size());	
+		
+		
+		System.out.println("This tempNumber.size of problem023 is " + tempNumber.size());		
+		
+		solution = sum;
+		
 		pEnd = System.currentTimeMillis();
 		System.out.println("This soluntion of problem023 is " + solution + " -- " + (pEnd-pBegin) + " ms");
 		
 		return solution;
 	}
 	
+
 	long problem024() {	
 		pBegin = System.currentTimeMillis();
+		String[] numeric0 = {"0","1","2","3","4","5","6","7","8","9"};
+		String[] numeric1 = {"0","1","2","3","4","5","6","7","8","9"};
+		String[] numeric2 = {"0","1","2","3","4","5","6","7","8","9"};
+		String[] numeric3 = {"0","1","2","3","4","5","6","7","8","9"};
+		String[] numeric4 = {"0","1","2","3","4","5","6","7","8","9"};
+		String[] numeric5 = {"0","1","2","3","4","5","6","7","8","9"};
+		String[] numeric6 = {"0","1","2","3","4","5","6","7","8","9"};
+		String[] numeric7 = {"0","1","2","3","4","5","6","7","8","9"};
+		String[] numeric8 = {"0","1","2","3","4","5","6","7","8","9"};
+		String[] numeric9 = {"0","1","2","3","4","5","6","7","8","9"};
+		
+		List<String> permutations  = new ArrayList<String>();
 
 		long solution = 0L;	
 		Mlib mlib = new Mlib();
+		
+		for (int i=0;i<10;i++)
+			for (int j=i;j<10;j++)
+				permutations.add(numeric0[j]+numeric1[(j+1)%10]+numeric2[(j+2)%10]+numeric3[(j+3)%10]+numeric4[(j+4)%10]+numeric5[(j+5)%10]+numeric6[(j+6)%10]+numeric7[(j+7)%10]+numeric8[(j+8)%10]+numeric9[(j+9)%10]);
 		
 		System.out.println("This factorial of problem024 is " + mlib.factorial(new BigInteger("10")));
 		
@@ -1329,7 +1364,7 @@ private Mlib mlib;
 	long problem169() {	
 		pBegin = System.currentTimeMillis();
 		
-		String INIT = "10000";
+		String INIT = "100";
 		long solution = 0L;	
 		Mlib mlib = new Mlib();
 		
