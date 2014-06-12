@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.SortedSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Mlib {
 
@@ -29,6 +31,7 @@ public class Mlib {
 		
 		for (int i=0;i<digits.length();i++) {
 			result = result + (long)Math.pow((digits.charAt(i) - 48),power);
+			
 		}
 		
 		return result;
@@ -87,21 +90,60 @@ public class Mlib {
 		return n.multiply(factorial(n.subtract(BigInteger.ONE)));
 	}
 
-	public List<Integer> divisors(int n) {
-		List<Integer> divisors = new ArrayList<Integer>();
+
+/*
+ * 	str length is not exceed 10
+ */
+	/**
+	 * @param str
+	 * @return
+	 */
+	public boolean pandigital (String str) {
+		final String PANDIGITAL_PATTERN  = "^(?!.*(.).*\\1)[1-9]{9}";
+
+		Pattern pattern;
+		Matcher matcher;
+		
+		pattern = Pattern.compile(PANDIGITAL_PATTERN);
+		matcher = pattern.matcher(str);
+		
+		return matcher.matches();
+	}
+	
+	public List<Integer> getDivisors(int n) {
 		int quotient = 0;
 		int remainder = 0;
+		List<Integer> divisors = new ArrayList<Integer>();
+
 		for (int i=1;i*i<=n;i++)	{
-			quotient = n/i; 
+			quotient  = n/i; 
 			remainder = n%i;
-			if ( remainder == 0) { 
+			if ( remainder == 0 ) { 
 				divisors.add(i);
-				divisors.add(quotient);
+				if (!divisors.contains(quotient)) divisors.add(quotient);
 			}
 		}
 		Collections.sort(divisors);
 			
 		return divisors;
-	}
+	}	
+/*
+ *  Get abundent number	
+ */
+	public boolean getAbundent (int number) {
+		int sum = 0;
+		List<Integer> divisorsList = new ArrayList<Integer>();
+		
+		divisorsList = getDivisors(number);
 
+		for (int i=0;i<divisorsList.size()-1;i++) {	//divisorsList.size()-1 : except itself
+			sum += divisorsList.get(i);
+		}
+		if (number < sum) 	return true; 
+		
+		return false;
+	}	
+	
+	
+	
 }

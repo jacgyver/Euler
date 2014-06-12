@@ -185,9 +185,9 @@ private final String[][] 	PROBLEM011_INIT 	= {
 
 
 private long pBegin,pEnd;
-private Mlib mlib;
+private Mlib mlib = new Mlib();
 
-	// 2014-05-22
+// 2014-05-22
 	long problem001() {
 		long solution = 0L;
 		pBegin = System.currentTimeMillis();
@@ -863,51 +863,49 @@ private Mlib mlib;
 	
 	long problem023() {	
 		pBegin = System.currentTimeMillis();
-		final int  LIMIT = 28123; 
+		
+		final int  LIMIT = 28123 ; 
 		List<Integer> divisors = new ArrayList<Integer>();
 		List<Integer> abundantNumber = new ArrayList<Integer>();	
-		List<Integer> tempNumber = new ArrayList<Integer>();	
+		List<Integer> abundantSumNumber = new ArrayList<Integer>();	
+		List<Integer> tempNumber = new ArrayList<Integer>();
+		int[] abundantArray = new int[100000]; 
 		
 		long solution = 0L;
 		int divisorsSum = 0;
 		int index = 0;
 		int temp = 0;
 		int sum = 0;
-		Mlib mlib = new Mlib();
+		int count = 0;
+
 		
-		for (int i=2;i<LIMIT;i++) {
-			divisors = mlib.getDivisors(i);
-
-			for (int j=0;j<divisors.size()-1;j++)
-				divisorsSum = divisorsSum + divisors.get(j);
+		for (int i=1;i<=LIMIT;i++) {
+			tempNumber.add(i);
 			
-			if (i<divisorsSum) abundantNumber.add(i); // get abundant Numbers
-			
-			divisorsSum = 0;
-			
-		//	tempNumber.add(i);
-		}
-
-			
-		for (int j=0;j<abundantNumber.size()-1;j++) {
-			for (int i=j;i<abundantNumber.size()-1;i++) {
-				temp = abundantNumber.get(j) + abundantNumber.get(i);
-				if (temp < LIMIT) 
-					tempNumber.add(i);
+			if (mlib.getAbundent(i)) {
+				abundantNumber.add(i);
 			}
 		}
+		//System.out.println(" This index of problem023 is " + abundantNumber);			
+		
+		for (int j=0;j<abundantNumber.size();j++) {
+			for (int k=0;k<abundantNumber.size();k++) {
+				temp  = abundantNumber.get(j) + abundantNumber.get(k);
+				//index = tempNumber.indexOf(temp);
 
-		for (int k=LIMIT;k>1;k--) {
-			if (!tempNumber.contains(k)) sum = sum + k;
-			//System.out.println("This k of problem023 is " + k);	
-			
+				if (temp > LIMIT) break;
+				//if (index == -1)  break;					
+				
+				abundantArray[count++] = temp;
+				System.out.println(j + ":" + k + ":" + " This abundantSumNumber of problem023 is " + temp);	
+				//tempNumber.remove(index); // remove abundantNumber
+	
+			}
 		}
-		
-		System.out.println("This abundantNumber.size of problem023 is " + abundantNumber.size());	
-		
-		
-		System.out.println("This tempNumber.size of problem023 is " + tempNumber.size());		
-		
+		for (int x=0;x<tempNumber.size();x++) {			
+			sum = sum + tempNumber.get(x);
+			//System.out.println(sum + ":" + x + " = " + tempNumber.get(x));				
+		}
 		solution = sum;
 		
 		pEnd = System.currentTimeMillis();
@@ -919,25 +917,37 @@ private Mlib mlib;
 
 	long problem024() {	
 		pBegin = System.currentTimeMillis();
-		String[] numeric0 = {"0","1","2","3","4","5","6","7","8","9"};
-		String[] numeric1 = {"0","1","2","3","4","5","6","7","8","9"};
-		String[] numeric2 = {"0","1","2","3","4","5","6","7","8","9"};
-		String[] numeric3 = {"0","1","2","3","4","5","6","7","8","9"};
-		String[] numeric4 = {"0","1","2","3","4","5","6","7","8","9"};
-		String[] numeric5 = {"0","1","2","3","4","5","6","7","8","9"};
-		String[] numeric6 = {"0","1","2","3","4","5","6","7","8","9"};
-		String[] numeric7 = {"0","1","2","3","4","5","6","7","8","9"};
-		String[] numeric8 = {"0","1","2","3","4","5","6","7","8","9"};
-		String[] numeric9 = {"0","1","2","3","4","5","6","7","8","9"};
 		
-		List<String> permutations  = new ArrayList<String>();
+//		String[] numeric0 = {"0","1","2","3","4","5","6","7","8","9"};
+//		String[] numeric1 = {"0","1","2","3","4","5","6","7","8","9"};
+//		String[] numeric2 = {"0","1","2","3","4","5","6","7","8","9"};
+//		String[] numeric3 = {"0","1","2","3","4","5","6","7","8","9"};
+//		String[] numeric4 = {"0","1","2","3","4","5","6","7","8","9"};
+//		String[] numeric5 = {"0","1","2","3","4","5","6","7","8","9"};
+//		String[] numeric6 = {"0","1","2","3","4","5","6","7","8","9"};
+//		String[] numeric7 = {"0","1","2","3","4","5","6","7","8","9"};
+//		String[] numeric8 = {"0","1","2","3","4","5","6","7","8","9"};
+//		String[] numeric9 = {"0","1","2","3","4","5","6","7","8","9"};
 
+		String[] numeric0 = {"0","1","2"};
+		String[] numeric1 = {"0","1","2"};
+		String[] numeric2 = {"0","1","2"};
+
+		List<String> permutations  = new ArrayList<String>();
 		long solution = 0L;	
 		Mlib mlib = new Mlib();
-		
-		for (int i=0;i<10;i++)
-			for (int j=i;j<10;j++)
-				permutations.add(numeric0[j]+numeric1[(j+1)%10]+numeric2[(j+2)%10]+numeric3[(j+3)%10]+numeric4[(j+4)%10]+numeric5[(j+5)%10]+numeric6[(j+6)%10]+numeric7[(j+7)%10]+numeric8[(j+8)%10]+numeric9[(j+9)%10]);
+
+		for (int num0=0;num0<3;num0++) 
+			permutations.add(Integer.toString(num0));
+
+//			for (int num1=0;num1<3;num1++) 
+////				for (int num2=0;num2<3;num2++) {
+//				permutations
+//					System.out.println(numeric0[num0] + numeric1[num1] + numeric2[num2]);
+//				}	
+//		for (int i=0;i<10;i++)
+//			for (int j=i;j<10;j++)
+//				permutations.add(numeric0[j]+numeric1[(j+1)%10]+numeric2[(j+2)%10]+numeric3[(j+3)%10]+numeric4[(j+4)%10]+numeric5[(j+5)%10]+numeric6[(j+6)%10]+numeric7[(j+7)%10]+numeric8[(j+8)%10]+numeric9[(j+9)%10]);
 		
 		System.out.println("This factorial of problem024 is " + mlib.factorial(new BigInteger("10")));
 		
@@ -977,26 +987,77 @@ private Mlib mlib;
 
 
 	long problem026() {	long solution = 0L;	return solution;}		
-	long problem027() {	long solution = 0L;	return solution;}	
+	long problem027() {	
+		pBegin = System.currentTimeMillis();
+		long sum = 0;
+		long solution = 0L;	
+		
+		int n = 0;
+		boolean isPrime;
+		for (int a=1;a<1000;a++) {
+			for (int b=1;b<1000;b++) {
+				sum = n*n + a*n + b;
+				isPrime = mlib.isPrime(sum);
+				System.out.println("n*n +" + a+"n +" + b+ " : " + isPrime);
+			}
+			
+		}
+		
+		
+		pEnd = System.currentTimeMillis();
+		System.out.println("This soluntion of problem027 is " + solution + " -- " + (pEnd-pBegin) + " ms");
+		return solution;
+	}	
+/*
+ * Number spiral diagonals
+ * 1. 5x5 array 	
+ */
 	long problem028() {	
 		pBegin = System.currentTimeMillis();
-		int sum = 0;
-		int x=0,y=0;
-		int s=-1;
+		int  X = 2;
+		int  Y = 2;
+		
+		int count = 0;
+		int turn = 0;
+		int x=X,y=Y,k=0,n=0,increase=0;
+		int sign=-1;
 		long solution = 0L;	
 		int[][] al = new int[5][5];
-		
+
 		for (int i=0;i<5;i++) {
-			for(int j=0;j<5;j++) {
-				sum ++;
-				s = s * -1;
-				x = 2 + s*i ;
-				y = 2 + s*j ;
-				//al[x][y] = sum;
-				System.out.print("[" + i + "," + j + "]");
+			for (int j=0;j<=i;j++) {
+				x= (X + j)%5;
+				y= (Y + (i-j))%5;
+				++count;
+				al[x][y] = count;
+				System.out.println(x + "*" +y + "=" + count );
+				
 			}
-			System.out.println();
 		}
+		
+//		while (count<25) {
+//			
+//			increase = increase+1;
+//			turn = increase%2;
+//
+//
+////			for(int i=0;i<increase;i++) {
+////				for(int j=0;j<increase;j++) {
+////					y = 4-((Y + i*turn)%5);
+////					x = 4-((X + j*turn)%5);
+////				}	
+////				count ++;
+////				System.out.println(count);	
+////				al[y][x] = count;
+////			}
+//
+////			if (y%5==0)System.out.println();
+////			X = X + x;
+////			Y = Y + y;
+////			sign = sign * -1;
+//
+//		}
+		
 
 		for (int i=0;i<5;i++) {
 			for(int j=0;j<5;j++) {
@@ -1010,29 +1071,107 @@ private Mlib mlib;
 		
 		return solution;
 	}		
-	long problem029() {	long solution = 0L;	return solution;}	
+	long problem029() {
+		pBegin = System.currentTimeMillis();	
+		long solution = 0L;	
+
+		List<BigInteger> powers = new ArrayList<BigInteger>();
+		BigInteger a = BigInteger.ZERO;
+		BigInteger b = BigInteger.ZERO;
+		BigInteger power =  BigInteger.ZERO;
+		
+		for (int i=2;i<=5;i++) {
+			a = new BigInteger(Integer.toString(i));
+			for(int j=2;j<=5;j++) {
+				power;
+//				System.out.printf("%2d %d %f\n",i,j,Math.pow(i, j));
+				if powers.add(a.pow(j));
+				b=b.add(BigInteger.ONE);
+			}
+		}
+		
+			
+		solution = b.longValue();
+		pEnd = System.currentTimeMillis();
+		System.out.println("This soluntion of problem029 is " + solution + " -- " + (pEnd-pBegin) + " ms");
+		
+		return solution;
+
+	}	
+/*
+ * Digit fifth powers
+ * Problem 30
+ * 1. 5x5 array 	
+ */	
 	long problem030() {	
 		pBegin = System.currentTimeMillis();
+		
 		long count = 0;
 		long sum = 0;
 		long solution = 0L;	
 		Mlib mlib = new Mlib();
 		
-		for(int i=1;i<10000;i++) {
-			sum = mlib.digitsPowerSum(Integer.toString(i),5);
-			if (i==sum) count+=sum;
-			
-			sum = 0;
+		for(long i=2;i<1000000;i++) {
+			sum = mlib.digitsPowerSum(Long.toString(i),5);
+			//sum = mlib.digitsPowerSum(Integer.toString(i),4);
+			if (i==sum) { 
+				solution = solution + sum;
+				System.out.println(i + " : " + solution );
+				
+			}
+
 		}
+
+//		sum = mlib.digitsPowerSum("1634",4)+mlib.digitsPowerSum("8208",4)+mlib.digitsPowerSum("9474",4);
 		
-		solution = count;
+//		solution = sum;
 		
 		pEnd = System.currentTimeMillis();
 		System.out.println("This soluntion of problem030 is " + solution + " -- " + (pEnd-pBegin) + " ms");
 		return solution;
 	}		
 	long problem031() {	long solution = 0L;	return solution;}	
-	long problem032() {	long solution = 0L;	return solution;}		
+
+/*
+ * Pandigital products
+ * Problem 32
+ * 1.  	
+ */	
+
+	long problem032() {
+		pBegin = System.currentTimeMillis();		
+		
+		long solution = 0L;	
+		long a = 0,b = 0,c = 0;
+		List<Long> sum = new ArrayList<Long>();
+		String str;
+		Mlib mlib = new Mlib();
+		
+		for (long i=1;i<50;i++) {
+
+			for (long j=1;j<10000;j++) {
+
+				c = i * j;
+				str = String.valueOf(i)+String.valueOf(j)+String.valueOf(c);
+				//System.out.println(i + ":"+ j + ":"+ c);	
+				if (mlib.pandigital(str)) {
+					if (!sum.contains(c)) sum.add(c);
+					System.out.println("inner "+ i + ":"+ j + ":"+ c);		
+				}
+			}
+		}
+		
+		System.out.println("sum.size() "+ sum.size());
+		for(int k=0;k<sum.size();k++) { 
+			solution += sum.get(k);
+			System.out.println("solution "+ solution + ":"+ sum.get(k));	
+		}
+		
+		pEnd = System.currentTimeMillis();
+		System.out.println("This soluntion of problem032 is " + solution + " -- " + (pEnd-pBegin) + " ms");		
+		return solution;
+	}
+	
 	long problem033() {	long solution = 0L;	return solution;}
 	
 	// 2014-05-23
@@ -1072,8 +1211,73 @@ private Mlib mlib;
 	long problem041() {	long solution = 0L;	return solution;}	
 	long problem042() {	long solution = 0L;	return solution;}		
 	long problem043() {	long solution = 0L;	return solution;}	
-	long problem044() {	long solution = 0L;	return solution;}		
-	long problem045() {	long solution = 0L;	return solution;}	
+	long problem044() {	long solution = 0L;	return solution;}
+	
+/*
+ * 
+ *		Triangle	 	Tn=n(n+1)/2	 	1, 3, 6, 10, 15, ...
+ *		Pentagonal	 	Pn=n(3nâˆ’1)/2	1, 5, 12, 22, 35, ...
+ *		Hexagonal	 	Hn=n(2nâˆ’1)	 	1, 6, 15, 28, 45, ...
+ *
+  
+ * 	
+ */
+	long problem045() {	
+		pBegin = System.currentTimeMillis();
+		
+		int count = 0;
+		long solution = 0L;	
+		BigInteger triangleNumber   = BigInteger.ONE;
+		BigInteger pentagonalNumber = BigInteger.ZERO;
+		BigInteger hexagonalNumber  = BigInteger.ZERO;
+		BigInteger t = BigInteger.ONE;
+		BigInteger p = BigInteger.ONE;
+		BigInteger h = BigInteger.ONE;
+
+
+		boolean forever = true;
+		boolean innerforever = true;
+		
+		while(forever) {
+			switch (triangleNumber.compareTo(pentagonalNumber)) { // compare to t, p
+				case  1 : 	p = p.add(BigInteger.ONE); 
+							pentagonalNumber = p.multiply(new BigInteger("3").multiply(p).subtract(BigInteger.ONE)).divide(new BigInteger("2")); // n(3n-1)/2
+							break;
+
+				case  0 : 	while (forever) {
+								if (triangleNumber.compareTo(hexagonalNumber) == 0) {
+									count++;
+									if (count > 1) {
+										forever = false;
+									}
+									break;
+								} else if (triangleNumber.compareTo(hexagonalNumber) > 0) {
+									h = h.add(BigInteger.ONE);
+									hexagonalNumber = h.multiply(new BigInteger("2").multiply(h).subtract(BigInteger.ONE))    ;
+								} else 
+									break;
+							}
+				case -1 : 	t = t.add(BigInteger.ONE); 
+							triangleNumber = t.multiply(t.add(BigInteger.ONE)).divide(new BigInteger("2")); // n(n+1)/2
+							break;
+
+				default :	
+			}
+			
+//			System.out.println(t + " : " + triangleNumber);
+//			System.out.println(p + " : " + pentagonalNumber);
+//			System.out.println(h + " : " + hexagonalNumber);
+		}
+
+							
+
+		solution = hexagonalNumber.longValue();
+		
+		pEnd = System.currentTimeMillis();
+		System.out.println("This soluntion of problem045 is " + solution + " -- " + (pEnd-pBegin) + " ms");
+		return solution;
+		
+	}	
 	long problem046() {	long solution = 0L;	return solution;}		
 	long problem047() {	long solution = 0L;	return solution;}	
 	long problem048() {	
@@ -1271,7 +1475,7 @@ private Mlib mlib;
 		
 		long solution = 0L;	
 		BigInteger MersennePrime =  BigInteger.ONE;  
-		//28433¡¿27830457+1
+		//28433Ã—27830457+1
 		
 		String mon = "28433";
 		MersennePrime = MersennePrime.add(BigInteger.ONE);			// 2
