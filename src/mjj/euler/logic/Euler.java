@@ -1,12 +1,17 @@
+package mjj.euler.logic;
 import java.util.concurrent.TimeUnit;
+
+import mjj.euler.problems.*;
 
 public class Euler {
 	
 	public static void main(String[] args) {
-		Problem pro = new Problem();
 		String estimated = null;
 		long begin = System.currentTimeMillis();
 		
+//		Problem023 program = new Problem023(); //  too much slow
+		Problem024 program = new Problem024(); //  too much slow
+
 //		pro.problem001();				
 //		pro.problem002();		//  Solved
 //		pro.problem003();				
@@ -29,30 +34,30 @@ public class Euler {
 //		pro.problem020();		//  Solved
 //		pro.problem021();				
 //		pro.problem022();				
-//		pro.problem023();				
+		program.getSolution();				
 //		pro.problem024();				
 //		pro.problem025();				
 //		pro.problem026();				
 //		pro.problem027();				
-//		pro.problem028();				
-//		pro.problem029();				
+//		pro.problem028();	//  Solved			
+//		pro.problem029();	//  Solved			
 //		pro.problem030();				
 //		pro.problem031();				
-//		pro.problem032();				
+//		pro.problem032();	//  Solved			
 //		pro.problem033();				
 //		pro.problem034();		//  Solved
 //
-		pro.problem035();				
+//		pro.problem035();				
 //		pro.problem036();				
 //		pro.problem037();				
 //		pro.problem038();				
 //		pro.problem039();				
-//		pro.problem040();				
+//		pro.problem040();		too much slow			
 //		pro.problem041();				
 //		pro.problem042();				
 //		pro.problem043();				
 //		pro.problem044();				
-//		pro.problem045();				
+//		pro.problem045();	//  Solved			
 //		pro.problem046();				
 //		pro.problem047();				
 //		pro.problem048();				
@@ -60,7 +65,7 @@ public class Euler {
 ////		pro.problem050();	too much slow				
 //		pro.problem051();				
 //		pro.problem052();				
-//		pro.problem053();				
+//		pro.problem053();		//  Solved		
 //		pro.problem054();				
 //		pro.problem055();				
 //		pro.problem056();				

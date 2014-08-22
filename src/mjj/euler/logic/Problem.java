@@ -1,3 +1,5 @@
+package mjj.euler.logic;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -875,9 +877,9 @@ private Mlib mlib = new Mlib();
 		final int  LIMIT = 28123 ; 
 		List<Integer> divisors = new ArrayList<Integer>();
 		List<Integer> abundantNumber = new ArrayList<Integer>();	
-		List<Integer> abundantSumNumber = new ArrayList<Integer>();	
 		List<Integer> tempNumber = new ArrayList<Integer>();
-		int[] abundantArray = new int[100000]; 
+
+		Object[] abundantArray; // = new int[100000]; 
 		
 		long solution = 0L;
 		int divisorsSum = 0;
@@ -894,22 +896,27 @@ private Mlib mlib = new Mlib();
 				abundantNumber.add(i);
 			}
 		}
-		//System.out.println(" This index of problem023 is " + abundantNumber);			
+		System.out.println(" This index of problem023 is " + abundantNumber);			
+		abundantArray = new Object[abundantNumber.size()];
+		abundantArray = abundantNumber.toArray();
 		
-		for (int j=0;j<abundantNumber.size();j++) {
-			for (int k=0;k<abundantNumber.size();k++) {
-				temp  = abundantNumber.get(j) + abundantNumber.get(k);
-				//index = tempNumber.indexOf(temp);
-
+		for (int j=0;j<abundantArray.length;j++) {
+			int add1 = abundantNumber.get(j);
+			for (int k=0;k<abundantArray.length;k++) {
+				temp  = add1 + abundantNumber.get(k);
 				if (temp > LIMIT) break;
-				//if (index == -1)  break;					
-				
-				abundantArray[count++] = temp;
-				System.out.println(j + ":" + k + ":" + " This abundantSumNumber of problem023 is " + temp);	
-				//tempNumber.remove(index); // remove abundantNumber
+
+				System.out.println(j + ":" + k + ":" + " temp is " + temp);	
+				//index = tempNumber.indexOf(temp);
+//				if (index != -1)  					
+				tempNumber.remove((Integer)temp); // remove abundantNumber
+//
+//				//abundantArray[count++] = temp;
 	
 			}
 		}
+		
+		System.out.println( " tempNumber.size( is " + tempNumber.size());	
 		for (int x=0;x<tempNumber.size();x++) {			
 			sum = sum + tempNumber.get(x);
 			//System.out.println(sum + ":" + x + " = " + tempNumber.get(x));				
@@ -1069,7 +1076,7 @@ private Mlib mlib = new Mlib();
 		}
 		
 		pEnd = System.currentTimeMillis();
-		System.out.println("This soluntion of problem030 is " + solution + " -- " + (pEnd-pBegin) + " ms");
+		System.out.println("This soluntion of problem028 is " + solution + " -- " + (pEnd-pBegin) + " ms");
 		
 		return solution;
 	}		
@@ -1231,7 +1238,27 @@ private Mlib mlib = new Mlib();
 	long problem037() {	long solution = 0L;	return solution;}	
 	long problem038() {	long solution = 0L;	return solution;}		
 	long problem039() {	long solution = 0L;	return solution;}	
-	long problem040() {	long solution = 0L;	return solution;}		
+	/* Champernowne's constant */
+	long problem040() {	
+		pBegin = System.currentTimeMillis();
+		long solution = 0L;	
+		
+		solution = 1 * champernowne(10) * champernowne(100) * champernowne(1000) * champernowne(10000) * champernowne(100000);
+
+		pEnd = System.currentTimeMillis();
+		System.out.println("This soluntion of problem040 is " + solution + " -- " + (pEnd-pBegin) + " ms");
+		return solution;
+	}		
+
+	private int champernowne(int i) {
+		String fractional = "0";
+		
+		for (int j=1;j<=i;j++)
+			fractional = fractional.concat(Integer.toString(j));
+		
+		return Integer.valueOf(String.valueOf(fractional.charAt(i)));
+	}
+
 	long problem041() {	long solution = 0L;	return solution;}	
 	long problem042() {	long solution = 0L;	return solution;}		
 	long problem043() {	long solution = 0L;	return solution;}	
@@ -1477,7 +1504,21 @@ private Mlib mlib = new Mlib();
 	long problem077() {	long solution = 0L;	return solution;}	
 	long problem078() {	long solution = 0L;	return solution;}		
 	long problem079() {	long solution = 0L;	return solution;}	
-	long problem080() {	long solution = 0L;	return solution;}		
+	long problem080() {	
+		pBegin = System.currentTimeMillis();
+		
+		long solution = 0L;	
+		Double bigInt = 0.0;//new BigInteger("2");
+		
+		
+		bigInt = Math.sqrt(2);
+		//System.out.println("This soluntion of sqrt is " + bigInt.toString(d));
+		
+		pEnd = System.currentTimeMillis();
+		System.out.println("This soluntion of problem080 is " + solution + " -- " + (pEnd-pBegin) + " ms");
+		return solution;
+	
+	}		
 	long problem081() {	long solution = 0L;	return solution;}	
 	long problem082() {	long solution = 0L;	return solution;}		
 	long problem083() {	long solution = 0L;	return solution;}	
@@ -1520,8 +1561,60 @@ private Mlib mlib = new Mlib();
 	}	
 	long problem098() {	long solution = 0L;	return solution;}		
 	long problem099() {	long solution = 0L;	return solution;}	
-	long problem100() {	long solution = 0L;	return solution;}		
-	long problem101() {	long solution = 0L;	return solution;}	
+	long problem100() {	long solution = 0L;	return solution;}
+
+	/*
+	 * If we are presented with the first k terms of a sequence it is impossible
+	 * to say with certainty the value of the next term, as there are infinitely
+	 * many polynomial functions that can model the sequence.
+	 * 
+	 * As an example, let us consider the sequence of cube numbers. This is
+	 * defined by the generating function, un = n3: 1, 8, 27, 64, 125, 216, ...
+	 * 
+	 * Suppose we were only given the first two terms of this sequence. Working
+	 * on the principle that "simple is best" we should assume a linear
+	 * relationship and predict the next term to be 15 (common difference 7).
+	 * Even if we were presented with the first three terms, by the same
+	 * principle of simplicity, a quadratic relationship should be assumed.
+	 * 
+	 * We shall define OP(k, n) to be the nth term of the optimum polynomial
+	 * generating function for the first k terms of a sequence. It should be
+	 * clear that OP(k, n) will accurately generate the terms of the sequence
+	 * for n ≤ k, and potentially the first incorrect term (FIT) will be OP(k,
+	 * k+1); in which case we shall call it a bad OP (BOP).
+	 * 
+	 * As a basis, if we were only given the first term of sequence, it would be
+	 * most sensible to assume constancy; that is, for n ≥ 2, OP(1, n) = u1.
+	 * 
+	 * Hence we obtain the following OPs for the cubic sequence:
+	 * 
+	 * OP(1, n) = 1 1, 1, 1, 1, ... OP(2, n) = 7n−6 1, 8, 15, ... OP(3, n) =
+	 * 6n2−11n+6 1, 8, 27, 58, ... OP(4, n) = n3 1, 8, 27, 64, 125, ... Clearly
+	 * no BOPs exist for k ≥ 4.
+	 * 
+	 * By considering the sum of FITs generated by the BOPs (indicated in red
+	 * above), we obtain 1 + 15 + 58 = 74.
+	 * 
+	 * Consider the following tenth degree polynomial generating function:
+	 * 
+	 * un = 1 − n + n2 − n3 + n4 − n5 + n6 − n7 + n8 − n9 + n10
+	 * 
+	 * Find the sum of FITs for the BOPs.
+	 */
+	long problem101() {			
+		pBegin = System.currentTimeMillis();
+		long solution = 0L;
+		
+		
+		for (int n = 1; n < 10; n++) {
+			solution = 1 - n + n*n - n*n*n + n*n*n*n - n*n*n*n*n + n*n*n*n*n*n - n*n*n*n*n*n*n + n*n*n*n*n*n*n*n - n*n*n*n*n*n*n*n*n + n*n*n*n*n*n*n*n*n*n;
+			System.out.println(n + " : This sum of i is " + solution );
+		}
+		
+		pEnd = System.currentTimeMillis();
+		System.out.println("This soluntion of problem097 is " + solution + " -- " + (pEnd-pBegin) + " ms");
+		return solution;
+	}	
 	long problem102() {	long solution = 0L;	return solution;}		
 	long problem103() {	long solution = 0L;	return solution;}	
 	long problem104() {	long solution = 0L;	return solution;}		

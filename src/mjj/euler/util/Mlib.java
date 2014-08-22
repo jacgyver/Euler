@@ -109,7 +109,23 @@ public class Mlib {
 		
 		return matcher.matches();
 	}
-	
+
+	/*
+	 * 	str length is include 0
+	 */
+		public boolean pandigitalIncludeZero (String str) {
+			final String PANDIGITAL_PATTERN  = "^(?!.*(.).*\\1)\\d{10}$";
+
+			Pattern pattern;
+			Matcher matcher;
+			
+			pattern = Pattern.compile(PANDIGITAL_PATTERN);
+			matcher = pattern.matcher(str);
+			
+			return matcher.matches();
+		}
+
+		
 	public List<Integer> getDivisors(int n) {
 		int quotient = 0;
 		int remainder = 0;
@@ -130,19 +146,7 @@ public class Mlib {
 /*
  *  Get abundent number	
  */
-	public boolean getAbundent (int number) {
-		int sum = 0;
-		List<Integer> divisorsList = new ArrayList<Integer>();
-		
-		divisorsList = getDivisors(number);
 
-		for (int i=0;i<divisorsList.size()-1;i++) {	//divisorsList.size()-1 : except itself
-			sum += divisorsList.get(i);
-		}
-		if (number < sum) 	return true; 
-		
-		return false;
-	}	
 	
 	
 	
